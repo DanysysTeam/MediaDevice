@@ -1,4 +1,4 @@
-# # AutoIt MediaDevice
+# AutoIt MediaDevice
 
 [![Latest Version](https://img.shields.io/badge/Latest-v1.0.0-green.svg)]()
 [![AutoIt Version](https://img.shields.io/badge/AutoIt-3.3.14.5-blue.svg)]()
