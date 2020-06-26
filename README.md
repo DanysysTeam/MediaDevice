@@ -11,7 +11,7 @@ AutoIt MediaDevice Library Allows you to communicate with attached media and sto
 
 ## Features
 * List Files and Folders.
-* Delete File and Folders.
+* Delete Files and Folders.
 * Copy File From Device.
 * Copy File To Device.
 
