@@ -569,17 +569,17 @@ Func _MD_DeviceFileCopyTo(ByRef $oDevice, $sPathFrom, $sPathTo, $bOverWrite = Fa
 	If $bOverWrite Then
 		If IsArray($aFile) And $aFile[17] = False Then _MD_DeviceItemDelete($oDevice, $sPathTo)
 	Else
-		If IsArray($aFile) And $aFile[17] = False Then Return SetError(2, 0, $aFile[0]) ;File Already Exist
+		If IsArray($aFile) And ($aFile[17] = False And $aFile[16] = False) Then Return SetError(2, 0, $aFile[0]) ;File Already Exist
 	EndIf
 
 	Local $sFileName = ""
-	If IsArray($aFile) And $aFile[17] Then  ;Exist and Is Directory
+	If IsArray($aFile) And ($aFile[17] Or $aFile[16]) Then  ;Exist and Is Directory
 		$sFileName = __MD_GetLastDirectoryName($sPathFrom)
 	Else
 		$sFileName = __MD_GetLastDirectoryName($sPathTo)
 		$sPathTo = __MD_RemoveLastDirectory($sPathTo)
 		$aFile = _MD_DeviceFindFile($oDevice, $sPathTo)
-		If Not IsArray($aFile) Or Not $aFile[17] Then Return SetError(3, 0, "") ; Not Found or is not Directory
+		If Not IsArray($aFile) Or Not ($aFile[17] Or $aFile[16]) Then Return SetError(3, 0, "") ; Not Found or is not Directory
 	EndIf
 
 	Local $sParentId = $aFile[0]
@@ -727,8 +727,8 @@ Func _MD_DeviceFileListToArrayRec(ByRef $oDevice, $sPath, $iFullProperties = Fal
 	Local $sObjectId = $aFile[0]
 	Local $oContent = _MPD_DeviceContent($oDevice)
 	__MD_CreateGlobalPropertiesDefault($oContent)
-	ReDim $__gaFilesRec2D[5][19]
-	ReDim $__gaFilesRec2DBasic[5][2]
+	ReDim $__gaFilesRec2D[1000][19]
+	ReDim $__gaFilesRec2DBasic[1000][2]
 	Local $iCount = __MD_ListRecursive($oContent, $sObjectId, $sBasePath, $iFullProperties, $iListOnlyFolder)
 
 	If $iFullProperties Then
